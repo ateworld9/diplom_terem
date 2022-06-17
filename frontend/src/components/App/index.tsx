@@ -11,11 +11,13 @@ import theme from '../../theme';
 
 import Header from '../Header';
 import Footer from '../Footer';
-import MainPage from '../MainPage';
-import CategoriesCatalogue from '../CategoriesCatalogue';
+import MainPage from '../../pages/MainPage';
 import CustomModal from '../CustomModal';
-import ProjectsCatalogue from '../ProjectsCatalogue';
-import ProjectPage from '../ProjectsPage';
+import CategoriesCatalogue from '../../pages/CategoriesCatalogue';
+import ProjectsCatalogue from '../../pages/ProjectsCatalogue';
+import ProjectPage from '../../pages/ProjectsPage';
+import Task1Page from '../../pages/Task1Page';
+import Task2Page from '../../pages/Task2Page';
 
 const store = setupStore();
 
@@ -31,6 +33,14 @@ const App: React.FC = () => (
             <Route path="/catalogue" element={<CategoriesCatalogue />} />
             <Route path="/catalogue/:category" element={<ProjectsCatalogue />} />
             <Route path="/projects/:altName" element={<ProjectPage />} />
+            <Route path="/task1" element={<Task1Page />} />
+            <Route path="/task2" element={<Task2Page />} />
+            {/* <Route path="/task3" element={<Task1Page />} /> */}
+            {/* <Route path="/task4" element={<Task1Page />} /> */}
+            {/* <Route path="/spravochnik/:name" element={} /> */}
+            {/* <Route path="/indocs/:name" element={} /> */}
+            {/* <Route path="/outdocs/:name" element={} /> */}
+
           </Routes>
         </Box>
         <Box component="footer" sx={{ backgroundColor: '#f7f6f5' }}>

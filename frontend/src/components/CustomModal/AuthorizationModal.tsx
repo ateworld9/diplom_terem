@@ -2,7 +2,7 @@ import React from 'react';
 import { Box } from '@mui/system';
 import { Typography, TextField, Button } from '@mui/material';
 
-import { useAppDispatch } from '../../hooks/redux';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { Modals, modalSlice } from './ModalSlice';
 
 interface IAuthorizationModal {
@@ -16,6 +16,7 @@ const AuthorizationModal: React.FC<IAuthorizationModal> = ({
   email, password, handleAuthorize, handleAuthorizeFormChange,
 }) => {
   const dispatch = useAppDispatch();
+  const { error } = useAppSelector((state) => state.userReducer);
   return (
     <Box display="flex" flexDirection="column">
       <Typography variant="h6" component="h2" sx={{ fontWeight: 600 }} mb={2}>
@@ -23,6 +24,11 @@ const AuthorizationModal: React.FC<IAuthorizationModal> = ({
       </Typography>
       <TextField id="email" name="email" label="Email" sx={{ mb: 2, width: '100%' }} onChange={handleAuthorizeFormChange} value={email} />
       <TextField id="password" name="password" label="Password" sx={{ mb: 2, width: '100%' }} onChange={handleAuthorizeFormChange} value={password} />
+      {error && (
+      <Typography sx={{ color: 'red', p: 1 }}>
+        Не правильно введен Email или пароль!
+      </Typography>
+      )}
       <Box display="flex">
         <Button variant="text" onClick={() => dispatch(modalSlice.actions.handleModalOpen(Modals.Registration))}>
           Регистрация

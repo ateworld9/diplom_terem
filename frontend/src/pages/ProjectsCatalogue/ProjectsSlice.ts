@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import $api from '../../axios';
 
 interface IProject {
-  id: number ;
+  projectId: number ;
   projectName: string;
   altName: string;
   price: string;
@@ -11,20 +11,13 @@ interface IProject {
 
 interface ProjectsState {
   projects: IProject[]
-  project: IProject
+  project?: IProject
   isLoading: boolean
   error: string
 }
 
 const initialState: ProjectsState = {
   projects: [],
-  project: {
-    id: 0,
-    projectName: '',
-    altName: '',
-    price: '',
-    imgPath: '',
-  },
   isLoading: false,
   error: '',
 };
@@ -108,7 +101,7 @@ export const projectsSlice = createSlice({
     [fetchProjectByAltName.rejected.type]: (state, action: PayloadAction<string>) => {
       state.isLoading = false;
       state.project = {
-        id: 0,
+        projectId: 0,
         projectName: '',
         altName: '',
         price: '',

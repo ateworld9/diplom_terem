@@ -31,9 +31,9 @@ const CategoriesCatalogue: React.FC = () => {
       </Typography>
       <Grid container>
         {categories?.[0] && categories.map(({
-          name, altName, priceFrom, imgPath,
+          categoryName, altName, priceFrom, imgPath,
         }) => (
-          <Grid key={name} item xs={4} pb="66px" pl="30px">
+          <Grid key={categoryName} item xs={4} pb="66px" pl="30px">
             <Link to={`/catalogue/${altName}`}>
               <Box
                 mb="7px"
@@ -44,7 +44,7 @@ const CategoriesCatalogue: React.FC = () => {
             <Box display="flex">
               <Link to={`/catalogue/${altName}`} style={{ textDecoration: 'none' }}>
                 <Typography color="#404040" sx={{ font: 'normal 600 18px/24px "Montserrat", sans-serif' }}>
-                  {name}
+                  {categoryName}
                 </Typography>
               </Link>
               <Box ml="auto">
@@ -72,32 +72,32 @@ const CategoriesCatalogue: React.FC = () => {
 };
 
 export default CategoriesCatalogue;
-const categoriesMock = [
-  {
-    name: 'Премиум', altName: 'premium', priceFrom: '7 332 000', imgPath: 'images/catalogue/Premium.jpg',
-  },
-  {
-    name: 'Коттеджи', altName: 'kottedzhi', priceFrom: '3 203 000', imgPath: 'images/catalogue/Kotedge.jpg',
-  },
-  {
-    name: 'Современные дома', altName: 'sovremennie-doma', priceFrom: '2 085 000', imgPath: 'images/catalogue/sovremennie_doma.jpg',
-  },
-  {
-    name: 'Небольшие коттеджи', altName: 'nebolshie-kottedzhi', priceFrom: '2 480 000', imgPath: 'images/catalogue/little_kotedge.jpeg',
-  },
-  {
-    name: 'Дачные дома', altName: 'dachnye-doma', priceFrom: '511 000', imgPath: 'images/catalogue/dachi.jpg',
-  },
-  {
-    name: 'Бани', altName: 'bani', priceFrom: '580 000', imgPath: 'images/catalogue/bani.jpg',
-  },
-  {
-    name: 'Одноэтажные дома', altName: 'odnoetazhnye-doma', priceFrom: '322 000', imgPath: 'images/catalogue/1level.jpg',
-  },
-  {
-    name: 'Двухэтажные дома', altName: 'dvukhetazhnye-doma', priceFrom: ' 3 803 000', imgPath: 'images/catalogue/2level.jpg',
-  },
-  {
-    name: 'Проекты с мансардой', altName: 'proekty-s-mansardoy', priceFrom: '1 200 000', imgPath: 'images/catalogue/with_mansarda.jpg',
-  },
-];
+// const categoriesMock = [
+//   {
+//     name: 'Премиум', altName: 'premium', priceFrom: '7 332 000', imgPath: 'images/catalogue/Premium.jpg',
+//   },
+//   {
+//     name: 'Коттеджи', altName: 'kottedzhi', priceFrom: '3 203 000', imgPath: 'images/catalogue/Kotedge.jpg',
+//   },
+//   {
+//     name: 'Современные дома', altName: 'sovremennie-doma', priceFrom: '2 085 000', imgPath: 'images/catalogue/sovremennie_doma.jpg',
+//   },
+//   {
+//     name: 'Небольшие коттеджи', altName: 'nebolshie-kottedzhi', priceFrom: '2 480 000', imgPath: 'images/catalogue/little_kotedge.jpeg',
+//   },
+//   {
+//     name: 'Дачные дома', altName: 'dachnye-doma', priceFrom: '511 000', imgPath: 'images/catalogue/dachi.jpg',
+//   },
+//   {
+//     name: 'Бани', altName: 'bani', priceFrom: '580 000', imgPath: 'images/catalogue/bani.jpg',
+//   },
+//   {
+//     name: 'Одноэтажные дома', altName: 'odnoetazhnye-doma', priceFrom: '322 000', imgPath: 'images/catalogue/1level.jpg',
+//   },
+//   {
+//     name: 'Двухэтажные дома', altName: 'dvukhetazhnye-doma', priceFrom: ' 3 803 000', imgPath: 'images/catalogue/2level.jpg',
+//   },
+//   {
+//     name: 'Проекты с мансардой', altName: 'proekty-s-mansardoy', priceFrom: '1 200 000', imgPath: 'images/catalogue/with_mansarda.jpg',
+//   },
+// ];

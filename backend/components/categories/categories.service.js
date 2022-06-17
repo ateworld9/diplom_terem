@@ -1,11 +1,21 @@
 const db = require('../../db');
-const CategoryDto = require('./dto/categories.dto');
 
 class CategoriesService {
   async getAllCategories() {
-    const categories = await db.query('SELECT * FROM categories');
+    try {
+      const categories = await db.query(`SELECT 
+      category_id as"categoryId"
+      ,category_name as"categoryName"
+      ,alt_name as"altName"
+      ,price_from as"priceFrom"
+      ,img_path as"imgPath"
+      FROM categories`);
 
-    return categories.rows.map((el) => new CategoryDto(el));
+      return categories.rows;
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
   }
 }
 

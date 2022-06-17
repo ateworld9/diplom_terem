@@ -6,6 +6,6 @@ module.exports = class UserDto {
   constructor(model) {
     this.id = model.user_id;
     this.email = model.email;
-    this.isActivated = model.isActivated;
+    this.isActivated = model.is_activated;
   }
 };

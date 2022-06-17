@@ -3,7 +3,7 @@ import $api from '../../axios';
 
 interface ICategories {
   categoryId: number;
-  name: string;
+  categoryName: string;
   altName: string;
   priceFrom: string;
   imgPath:string

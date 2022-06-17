@@ -11,23 +11,39 @@ class TokenService {
   }
 
   async saveToken(userId, refreshToken) {
-    const tokenData = await db.query('SELECT * FROM tokens where user_id = $1', [userId]);
+    const tokenData = await db.query(`SELECT 
+     token_id as "tokenId"
+    ,user_id as "userId"
+    ,refresh_token as "refreshToken"
+    FROM tokens where user_id = $1`, [userId]);
     if (tokenData.rows[0]) {
-      await db.query('UPDATE tokens set refresh_token = $1 where token_id = $2', [refreshToken, tokenData.rows[0].token_id]);
+      console.log(tokenData);
+      await db.query('UPDATE tokens set refresh_token = $1 where token_id = $2', [refreshToken, tokenData.rows[0].tokenId]);
       return;
     }
-
     await db.query('INSERT INTO tokens (user_id,  refresh_token) VALUES ($1, $2) RETURNING *', [userId, refreshToken]);
   }
 
   async removeToken(refreshToken) {
-    const tokenData = await db.query('DELETE FROM tokens where refresh_token = $1', [refreshToken]);
-    return tokenData;
+    try {
+      const tokenData = await db.query('DELETE FROM tokens where refresh_token = $1', [refreshToken]);
+      return tokenData;
+    } catch (error) {
+      return error;
+    }
   }
 
   async findToken(refreshToken) {
-    const tokenData = await db.query('SELECT * FROM tokens where refresh_token = $1', [refreshToken]);
-    return tokenData;
+    try {
+      const tokenData = await db.query(`SELECT 
+      token_id as "tokenId"
+      ,user_id as "userId"
+      ,refresh_token as "refreshToken"
+      FROM tokens where refresh_token = $1`, [refreshToken]);
+      return tokenData;
+    } catch (error) {
+      return error;
+    }
   }
 
   validateAccessToken(token) {
@@ -35,7 +51,7 @@ class TokenService {
       const userData = jwt.verify(token, process.env.JWT_ACCESS_SECRET);
       return userData;
     } catch (error) {
-      return null;
+      return error;
     }
   }
 
@@ -44,7 +60,7 @@ class TokenService {
       const userData = jwt.verify(token, process.env.JWT_REFRESH_SECRET);
       return userData;
     } catch (error) {
-      return null;
+      return error;
     }
   }
 }

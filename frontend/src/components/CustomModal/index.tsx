@@ -9,6 +9,8 @@ import AuthorizationModal from './AuthorizationModal';
 import { Modals, modalSlice } from './ModalSlice';
 import BuyFormModal from './BuyForm';
 
+const initAuthorizeForm = { email: '', password: '', error: '' };
+
 const CustomModal: React.FC = () => {
   const dispatch = useAppDispatch();
   const { modalState } = useAppSelector((state) => state.modalReducer);
@@ -19,18 +21,18 @@ const CustomModal: React.FC = () => {
     dispatch(modalSlice.actions.handleModalClose());
   }, [user.email]);
 
-  const [authorizeForm, setAuthorizeForm] = React.useState({ email: '', password: '' });
+  const [authorizeForm, setAuthorizeForm] = React.useState(initAuthorizeForm);
   const handleAuthorizeFormChange:React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> = (event) => {
     const { target } = event;
     setAuthorizeForm((prevState) => ({ ...prevState, [target.id]: target.value }));
   };
   const handleRegistration = () => {
     dispatch(fetchRegistration(authorizeForm.email, authorizeForm.password));
-    setAuthorizeForm({ email: '', password: '' });
+    setAuthorizeForm(initAuthorizeForm);
   };
   const handleAuthorize = () => {
     dispatch(fetchLogin(authorizeForm.email, authorizeForm.password));
-    setAuthorizeForm({ email: '', password: '' });
+    setAuthorizeForm(initAuthorizeForm);
   };
   return (
     <Modal
@@ -39,7 +41,6 @@ const CustomModal: React.FC = () => {
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-
       <Box sx={{
         position: 'absolute',
         top: '50%',

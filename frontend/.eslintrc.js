@@ -37,5 +37,8 @@ module.exports = {
     'react/prop-types': 0,
     'no-param-reassign': ['off'],
     'max-len': ['off'],
+    'react/jsx-uses-react': 'off',
+    'react/react-in-jsx-scope': 'off',
+    'react/jsx-props-no-spreading': 'off'
   },
 };

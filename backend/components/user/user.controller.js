@@ -27,7 +27,7 @@ class UserController {
       id, email, login, password,
     } = req.body;
     try {
-      const updatedUser = await db.query('UPDATE users set email = $1, login = $2, password = $3 where id = $4', [email, login, password, id]);
+      const updatedUser = await db.query('UPDATE users set email = $1, login = $2, password = $3 where user_id = $4', [email, login, password, id]);
       res.json(updatedUser.rows[0]);
     } catch (err) {
       next(err);
@@ -36,7 +36,7 @@ class UserController {
   async deleteUser(req, res, next) {
     const { id } = req.params;
     try {
-      const user = await db.query('DELETE FROM users where id = $1', [id]);
+      const user = await db.query('DELETE FROM users where user_id = $1', [id]);
       res.json(user.rows[0]);
     } catch (err) {
       next(err);
@@ -47,12 +47,13 @@ class UserController {
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
-        return next(ApiError.BadRequest('Ошибка при валидации', errors.array()));
+        next(ApiError.BadRequest('Ошибка при валидации', errors.array()));
+      } else {
+        const { email, password } = req.body;
+        const userData = await userService.registration(email, password);
+        res.cookie('refreshToken', userData.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true });
+        res.json(userData);
       }
-      const { email, password } = req.body;
-      const userData = await userService.registration(email, password);
-      res.cookie('refreshToken', userData.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true });
-      res.json(userData);
     } catch (error) {
       next(error);
     }
@@ -61,12 +62,14 @@ class UserController {
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
-        return next(ApiError.BadRequest('Ошибка при валидации', errors.array()));
+        next(ApiError.BadRequest('Ошибка при валидации', errors.array()));
+      } else {
+        const { email, password } = req.body;
+        const userData = await userService.login(email, password);
+        console.log(userData);
+        res.cookie('refreshToken', userData.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true });
+        res.json(userData);
       }
-      const { email, password } = req.body;
-      const userData = await userService.login(email, password);
-      res.cookie('refreshToken', userData.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true });
-      return res.json(userData);
     } catch (err) {
       next(err);
     }
