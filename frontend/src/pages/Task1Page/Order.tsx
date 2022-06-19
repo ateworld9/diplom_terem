@@ -10,7 +10,7 @@ import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import { IOrder } from './OrdersSlice';
+import { IOrder } from '../OrdersIndoc/OrdersSlice';
 
 const Order: FC<IOrder> = ({
   orderId, customerFio, orderDate, price, address, project,

@@ -4,13 +4,16 @@ import $api from '../../axios';
 export interface IManufactoryPlan {
 orderId: number;
 productId: number
-productName: string
-productCount: number
-timeToProduce: number
+equipmentName: string;
+ productName: string
+ productCount: string
+ timeToProduce: number
+ unitShort: string
 }
 export interface IManufactoryP {
   manufactoryId: number ;
-  powers: number;
+  manufactoryPowers: number;
+  docDate: string;
   manufactoryPlan:IManufactoryPlan[]
 }
 interface ManufactoriesState {
@@ -27,9 +30,10 @@ const initialState: ManufactoriesState = {
 
 export const fetchManufactoriesPlans = createAsyncThunk(
   'manufactoriesPlans/fetchManufactoriesPlans',
-  async (_, thunkApi) => {
+  async (date: string, thunkApi) => {
+    console.log(date);
     try {
-      const response = await $api.get<IManufactoryP[]>('/manufactoriesPlans');
+      const response = await $api.get<IManufactoryP[]>(`/manufactoriesPlans/${date}`);
 
       return response.data;
     } catch (error) {

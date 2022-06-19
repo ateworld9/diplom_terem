@@ -5,16 +5,18 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 
 import { Menu, MenuItem } from '@mui/material';
-import { log } from 'console';
 import Logo from './Logo';
 import { useAppDispatch } from '../../hooks/redux';
 import { fetchLogout } from '../../store/reducers/ActionCreators';
 
 const authenticatedPages = [{ page: 'Задача 1', link: '/task1' }, { page: 'Задача 2', link: '/task2' }, { page: 'Задача 3', link: '/task3' }, { page: 'Задача 4', link: '/task4' }];
 const directoriesPages = [
-  { page: 'Ведомость производимых цехом изделий', link: '/spravochnik/manufactories_produce_products' },
-  { page: 'Реестр спецификаций проектов', link: '/spravochnik/specifications' },
   { page: 'Справочник цехов', link: '/spravochnik/manufactories' },
+  { page: 'Реестр спецификаций проектов', link: '/spravochnik/specifications' },
+  { page: 'Ведомость производимых цехом изделий', link: '/spravochnik/manufactories_produce_products' },
+];
+const indocsPages = [
+  { page: 'Реестр договоров на строительство объекта деревянного строительства', link: '/indocs/orders' },
 ];
 const AuthorizedHeader: FC = () => {
   const navigate = useNavigate();
@@ -27,7 +29,7 @@ const AuthorizedHeader: FC = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const handleClickMenu = (link: any) => {
+  const handleClickMenu = (link: string) => {
     navigate(link);
     handleClose();
   };
@@ -71,6 +73,34 @@ const AuthorizedHeader: FC = () => {
         </Menu>
 
         <Button
+          id="indocs-button"
+          aria-controls={anchorEl?.id === 'indocs-button' ? 'indocs-menu' : undefined}
+          aria-haspopup="true"
+          aria-expanded={anchorEl?.id === 'indocs-button' ? 'true' : undefined}
+          onClick={handleClick}
+          sx={{
+            my: 2, mx: 4, display: 'block', color: 'common.black', fontSize: '17px',
+          }}
+        >
+          Входящие документы
+        </Button>
+        <Menu
+          id="indocs-menu"
+          anchorEl={anchorEl}
+          open={anchorEl?.id === 'indocs-button'}
+          onClose={handleClose}
+          MenuListProps={{
+            'aria-labelledby': 'indocs-button',
+          }}
+        >
+          {indocsPages.map(({ page, link }) => (
+            <MenuItem key={page} onClick={() => { handleClickMenu(link); }}>
+              {page}
+            </MenuItem>
+          ))}
+        </Menu>
+
+        <Button
           id="tasks-button"
           aria-controls={anchorEl?.id === 'tasks-button' ? 'tasks-menu' : undefined}
           aria-haspopup="true"
@@ -97,6 +127,7 @@ const AuthorizedHeader: FC = () => {
             </MenuItem>
           ))}
         </Menu>
+
       </Box>
       <Box sx={{ display: 'flex', ml: 'auto' }}>
         <Button

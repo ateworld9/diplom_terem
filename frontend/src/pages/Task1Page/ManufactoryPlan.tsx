@@ -13,7 +13,7 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { IManufactoryP } from './ManufactoriesPlansSlice';
 
 const ManufactoryPlan: FC<IManufactoryP> = ({
-  manufactoryId, powers, manufactoryPlan,
+  manufactoryId, manufactoryPowers, manufactoryPlan, docDate,
 }) => {
   const [open, setOpen] = useState(false);
 
@@ -33,7 +33,10 @@ const ManufactoryPlan: FC<IManufactoryP> = ({
           {manufactoryId}
         </TableCell>
         <TableCell align="left">
-          {powers}
+          {manufactoryPowers}
+        </TableCell>
+        <TableCell align="left">
+          {docDate}
         </TableCell>
         <TableCell align="left">
           {manufactoryPlan.reduce((prev, curr) => prev + Number(curr.timeToProduce), 0)}
@@ -81,7 +84,7 @@ const ManufactoryPlan: FC<IManufactoryP> = ({
                 </TableHead>
                 <TableBody>
                   {manufactoryPlan?.map((item) => (
-                    <TableRow key={`${item.orderId}manufPlanItem${item.productId}`}>
+                    <TableRow key={`${item.orderId}MP Row${item.productName}`}>
                       <TableCell component="th" scope="row">
                         {item.productId}
                       </TableCell>
@@ -89,7 +92,7 @@ const ManufactoryPlan: FC<IManufactoryP> = ({
                         {item.productName}
                       </TableCell>
                       <TableCell>
-                        equipment
+                        {item.equipmentName}
                       </TableCell>
                       <TableCell align="center">
                         {item.productCount}

@@ -10,10 +10,10 @@ import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import { IManufactory, IManufactoryProduceProdoctItem } from './ManufactoriesSlice';
+import { IEquipment, IManufactory } from './ManufactoriesSpravochnikSlice';
 
 const Manufactory: FC<IManufactory> = ({
-  id, workersCount, powers, manufactoryProduceProducts,
+  manufactoryId, manufactoryName, manufactoryEquipment,
 }) => {
   const [open, setOpen] = useState(false);
 
@@ -30,13 +30,10 @@ const Manufactory: FC<IManufactory> = ({
           </IconButton>
         </TableCell>
         <TableCell component="th" scope="row">
-          {id}
+          {manufactoryId}
         </TableCell>
         <TableCell align="left">
-          {workersCount}
-        </TableCell>
-        <TableCell align="left">
-          {powers}
+          {manufactoryName}
         </TableCell>
       </TableRow>
       <TableRow>
@@ -44,55 +41,39 @@ const Manufactory: FC<IManufactory> = ({
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
               <Typography variant="h6" gutterBottom component="div" sx={{ fontWeight: 'bold' }}>
-                Ведомость производимых цехом изделий
+                Оборудование
               </Typography>
               <Table size="small" aria-label="purchases">
                 <TableHead>
                   <TableRow>
                     <TableCell>
                       <Typography sx={{ fontWeight: 'bold' }}>
-                        Код изделия
+                        Наименование оборудования
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography sx={{ fontWeight: 'bold' }}>
-                        Необходимое оборудование
-                      </Typography>
-                    </TableCell>
-                    <TableCell>
-                      <Typography sx={{ fontWeight: 'bold' }}>
-                        Изделие
+                        Серийный номер
                       </Typography>
                     </TableCell>
                     <TableCell align="right">
                       <Typography sx={{ fontWeight: 'bold' }}>
-                        Кол-во
-                      </Typography>
-                    </TableCell>
-                    <TableCell align="right">
-                      <Typography sx={{ fontWeight: 'bold' }}>
-                        Время производства
+                        Мощность
                       </Typography>
                     </TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {manufactoryProduceProducts?.map((item: IManufactoryProduceProdoctItem) => (
-                    <TableRow key={`manufItems_i${item.id}`}>
-                      <TableCell component="th" scope="row">
-                        {item.id}
+                  {manufactoryEquipment?.map((item: IEquipment) => (
+                    <TableRow key={`manufEquip_i${item.equipmentId}`}>
+                      <TableCell>
+                        {item.equipmentName}
                       </TableCell>
                       <TableCell>
-                        equipmentName
-                      </TableCell>
-                      <TableCell>
-                        {item.productName}
+                        {item.serialCode}
                       </TableCell>
                       <TableCell align="right">
-                        {item.unitShort}
-                      </TableCell>
-                      <TableCell align="right">
-                        {item.timeToProduce}
+                        {item.powers}
                       </TableCell>
                     </TableRow>
                   ))}

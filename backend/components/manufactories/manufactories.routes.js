@@ -3,7 +3,9 @@ const manufactoriesController = require('./manufactories.controller');
 
 const router = new Router();
 
-router.get('/manufactories', manufactoriesController.getManufactories);
-router.get('/manufactoriesPlans', manufactoriesController.getManufactoriesPlan);
+router.get('/manufactoriesSpravochnik', manufactoriesController.getManufactoriesSpravochnik);
+router.get('/manufactoriesProduceProducts', manufactoriesController.getManufactoriesProduceProducts);
+router.get('/calculateManufactoriesPlans/:date', manufactoriesController.calculateManufactoriesPlan);
+router.get('/manufactoriesPlans/:docDate', manufactoriesController.getManufactoriesPlan);
 
 module.exports = router;

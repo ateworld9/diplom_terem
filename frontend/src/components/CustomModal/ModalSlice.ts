@@ -7,11 +7,11 @@ export enum Modals {
   BuyForm
 }
 
-interface ProjectsState {
+interface ModalState {
   modalState: Modals;
 }
 
-const initialState: ProjectsState = {
+const initialState: ModalState = {
   modalState: Modals.Close,
 };
 

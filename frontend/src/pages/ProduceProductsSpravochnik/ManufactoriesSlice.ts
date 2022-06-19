@@ -2,20 +2,20 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import $api from '../../axios';
 
 export interface IManufactory {
-  id: number ;
-  workersCount: number;
-  powers: number;
-  manufactoryProduceProducts: IManufactoryProduceProdoctItem[];
+  manufactoryId: number ;
+  manufactoryName: number ;
+  manufactoryProduceProducts?: IProduceProducts[];
 }
 
-export interface IManufactoryProduceProdoctItem {
-  id: number
-  manufactoryId: number
+export interface IProduceProducts {
   productId: number
-  unitName: string
+  productName: string
   unitShort: string
   timeToProduce: number
-  productName: string
+  equipmentId: number
+  equipmentName: string
+  serialCode: string
+  powers: number
 }
 
 interface ManufactoriesState {
@@ -30,15 +30,14 @@ const initialState: ManufactoriesState = {
   error: '',
 };
 
-export const fetchAllManufactories = createAsyncThunk(
-  'manufactories/fetchAllManufactories',
+export const fetchManufactoriesProduceProducts = createAsyncThunk(
+  'manufactories/fetchManufactoriesProduceProducts',
   async (_, thunkApi) => {
     try {
-      const response = await $api.get<IManufactory[]>('/manufactories');
-
+      const response = await $api.get<IManufactory[]>('/manufactoriesProduceProducts');
       return response.data;
     } catch (error) {
-      return thunkApi.rejectWithValue('не удалось загрузить категории');
+      return thunkApi.rejectWithValue('не удалось загрузить ведомости производимых ресурсов');
     }
   },
 );
@@ -49,19 +48,18 @@ export const manufactoriesSlice = createSlice({
   reducers: {
   },
   extraReducers: {
-    [fetchAllManufactories.fulfilled.type]: (state, action: PayloadAction<IManufactory[]>) => {
+    [fetchManufactoriesProduceProducts.fulfilled.type]: (state, action: PayloadAction<IManufactory[]>) => {
       state.isLoading = false;
       state.error = '';
       state.manufactories = action.payload;
     },
-    [fetchAllManufactories.pending.type]: (state) => {
+    [fetchManufactoriesProduceProducts.pending.type]: (state) => {
       state.isLoading = true;
     },
-    [fetchAllManufactories.rejected.type]: (state, action: PayloadAction<string>) => {
+    [fetchManufactoriesProduceProducts.rejected.type]: (state, action: PayloadAction<string>) => {
       state.isLoading = false;
       state.error = action.payload;
     },
-
   },
 });
 

@@ -10,6 +10,16 @@ class OrdersController {
     }
   }
 
+  async getOrdersByDate(req, res, next) {
+    try {
+      const { date } = req.params;
+      const ordersData = await ordersService.getOrdersByDate(date);
+      res.json(ordersData);
+    } catch (error) {
+      next(error);
+    }
+  }
+
   async createOrder(req, res, next) {
     try {
       const {

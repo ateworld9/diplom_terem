@@ -54,6 +54,18 @@ export const fetchOrders = createAsyncThunk(
   },
 );
 
+export const fetchOrdersByDate = createAsyncThunk(
+  'orders/fetchOrdersByDate',
+  async (date: string, thunkApi) => {
+    try {
+      const response = await $api.get<IOrder[]>(`/orders/${date}`);
+      return response.data;
+    } catch (error) {
+      return thunkApi.rejectWithValue('не удалось загрузить заказы');
+    }
+  },
+);
+
 export const ordersSlice = createSlice({
   name: 'orders',
   initialState,
@@ -72,7 +84,18 @@ export const ordersSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
-
+    [fetchOrdersByDate.fulfilled.type]: (state, action: PayloadAction<IOrder[]>) => {
+      state.isLoading = false;
+      state.error = '';
+      state.orders = action.payload;
+    },
+    [fetchOrdersByDate.pending.type]: (state) => {
+      state.isLoading = true;
+    },
+    [fetchOrdersByDate.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
   },
 });
 

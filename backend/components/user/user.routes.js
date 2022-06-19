@@ -4,11 +4,6 @@ const userController = require('./user.controller');
 
 const router = new Router();
 
-router.get('/users', userController.getUsers);
-router.get('/user/:id', userController.getUserById);
-router.put('/user', userController.updateUser);
-router.delete('/user/:id', userController.deleteUser);
-
 router.post(
   '/registration',
   body('email').isEmail(),

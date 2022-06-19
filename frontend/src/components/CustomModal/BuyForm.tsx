@@ -8,27 +8,31 @@ import { modalSlice } from './ModalSlice';
 
 const BuyFormModal: React.FC = () => {
   const dispatch = useAppDispatch();
+  const [error, setError] = useState('');
   const [formState, setFormState] = useState({
     surname: '', name: '', otchestvo: '', address: '', tel: '',
   });
 
   const projectId = useAppSelector((state) => state.projectsReducer?.project?.projectId);
-
   const handleFormChange:React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> = (event) => {
     const { target } = event;
     setFormState((prevState) => ({ ...prevState, [target.id]: target.value }));
   };
 
   const handleBuyForm = async () => {
-    const customerFio = `${formState.surname} ${formState.name} ${formState.otchestvo}`;
+    if (formState.surname === '' || formState.name === '' || formState.otchestvo === '') {
+      setError('Необходимо заполнить все поля');
+    } else {
+      const customerFio = `${formState.surname} ${formState.name} ${formState.otchestvo}`;
 
-    const orderDate = new Date().toISOString().slice(0, 10);
+      const orderDate = new Date().toISOString().slice(0, 10);
 
-    await $api.post('/order', {
-      customerFio, projectId, address: formState.address, orderDate,
-    });
+      await $api.post('/order', {
+        customerFio, projectId, address: formState.address, orderDate,
+      });
 
-    dispatch(modalSlice.actions.handleModalClose());
+      dispatch(modalSlice.actions.handleModalClose());
+    }
   };
 
   return (
@@ -44,6 +48,11 @@ const BuyFormModal: React.FC = () => {
       <Button onClick={handleBuyForm} sx={{ ml: 'auto' }}>
         Отправить заявку
       </Button>
+      {error && (
+      <Typography variant="body1" mt={1}>
+        {error}
+      </Typography>
+      )}
     </Box>
   );
 };

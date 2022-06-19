@@ -18,6 +18,12 @@ import ProjectsCatalogue from '../../pages/ProjectsCatalogue';
 import ProjectPage from '../../pages/ProjectsPage';
 import Task1Page from '../../pages/Task1Page';
 import Task2Page from '../../pages/Task2Page';
+import Task3Page from '../../pages/Task3Page';
+import Task4Page from '../../pages/Task4Page';
+import ManufactoriesSpravochnik from '../../pages/ManufactoriesSpravochnik';
+import SpecificationsSpravochnik from '../../pages/SpecificationsSpravochnik';
+import ProduceProductsSpravochnik from '../../pages/ProduceProductsSpravochnik';
+import OrdersIndoc from '../../pages/OrdersIndoc';
 
 const store = setupStore();
 
@@ -35,9 +41,12 @@ const App: React.FC = () => (
             <Route path="/projects/:altName" element={<ProjectPage />} />
             <Route path="/task1" element={<Task1Page />} />
             <Route path="/task2" element={<Task2Page />} />
-            {/* <Route path="/task3" element={<Task1Page />} /> */}
-            {/* <Route path="/task4" element={<Task1Page />} /> */}
-            {/* <Route path="/spravochnik/:name" element={} /> */}
+            <Route path="/task3" element={<Task3Page />} />
+            <Route path="/task4" element={<Task4Page />} />
+            <Route path="/spravochnik/manufactories" element={<ManufactoriesSpravochnik />} />
+            <Route path="/spravochnik/specifications" element={<SpecificationsSpravochnik />} />
+            <Route path="/spravochnik/manufactories_produce_products" element={<ProduceProductsSpravochnik />} />
+            <Route path="/indocs/:name" element={<OrdersIndoc />} />
             {/* <Route path="/indocs/:name" element={} /> */}
             {/* <Route path="/outdocs/:name" element={} /> */}
 

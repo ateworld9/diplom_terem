@@ -57,29 +57,60 @@ class OrdersService {
     try {
       const orders = await db.query(`
       SELECT 
-       o.id as "orderId"
-      ,o.customer_fio as "customerFio"
-      ,o.project_id as "projectId"
-      ,o.order_date as "orderDate"
-      ,o.address as "address"
-      ,p.project_name as "projectName"
-      ,p.price as "price"
-      ,si.id as "id"
-      ,si.specification_id as "specificationId"
-      ,si.product_id as "productId"
-      ,pp.product_name as "productName"
-      ,si.product_count as "productCount"
-      ,si.unit_id as "unitId"
-      ,u.unit_name as "unitName"
-      ,u.unit_short as "unitShort"
-      FROM orders o
-      join projects p on o.project_id = p.project_id
-      join specifications s on o.project_id = s.project_id 
-      join specifications_items si on si.specification_id = s.id
-      join products pp on pp.id = si.product_id
-      join units u on u.id = si.unit_id
+      o.id as "orderId"
+     ,o.customer_fio as "customerFio"
+     ,o.project_id as "projectId"
+     ,o.order_date as "orderDate"
+     ,o.address as "address"
+     ,p.project_name as "projectName"
+     ,p.price as "price"
+     ,si.id as "id"
+     ,si.specification_id as "specificationId"
+     ,si.product_id as "productId"
+     ,pp.product_name as "productName"
+     ,si.product_count as "productCount"
+     ,u.unit_name as "unitName"
+     ,u.unit_short as "unitShort"
+     FROM orders o
+     join projects p on o.project_id = p.project_id
+     join specifications s on o.project_id = s.project_id 
+     join specifications_items si on si.specification_id = s.id
+     join products pp on pp.id = si.product_id
+     join units u on u.id = pp.unit_id
       `);
+      return ordersAdapter(orders.rows);
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  }
 
+  async getOrdersByDate(date) {
+    try {
+      const orders = await db.query(`
+      SELECT 
+      o.id as "orderId"
+     ,o.customer_fio as "customerFio"
+     ,o.project_id as "projectId"
+     ,o.order_date as "orderDate"
+     ,o.address as "address"
+     ,p.project_name as "projectName"
+     ,p.price as "price"
+     ,si.id as "id"
+     ,si.specification_id as "specificationId"
+     ,si.product_id as "productId"
+     ,pp.product_name as "productName"
+     ,si.product_count as "productCount"
+     ,u.unit_name as "unitName"
+     ,u.unit_short as "unitShort"
+     FROM orders o
+     join projects p on o.project_id = p.project_id
+     join specifications s on o.project_id = s.project_id 
+     join specifications_items si on si.specification_id = s.id
+     join products pp on pp.id = si.product_id
+     join units u on u.id = pp.unit_id
+     where o.order_date > $1
+      `, [date]);
       return ordersAdapter(orders.rows);
     } catch (error) {
       console.log(error);
@@ -92,14 +123,13 @@ class OrdersService {
       const orders = await db.query(`
       INSERT INTO orders
       (customer_fio, project_id, order_date, address)
-      VALUES ( $1, $2, $3)
+      VALUES ( $1, $2, $3, $4)
       RETURNING
       customer_fio as "customerFio"
       ,project_id as "projectId"
       ,order_date as "orderDate"
-      ,address
+      ,address as "address"
       `, [customerFio, projectId, orderDate, address]);
-
       return orders;
     } catch (error) {
       console.log(error);
