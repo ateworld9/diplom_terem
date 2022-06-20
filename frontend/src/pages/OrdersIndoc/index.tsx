@@ -21,7 +21,7 @@ const OrdersIndoc: FC = () => {
   return (
     <Container component="section" maxWidth="xl" sx={{ minHeight: '80vh', mt: '180px', mb: '120px' }}>
       <Typography variant="h5" mb={3} sx={{ fontWeight: 'bold' }}>
-        Справочник Цехов
+        Реестр договоров на строительство объекта деревянного строительства
       </Typography>
 
       <TableContainer component={Paper}>

@@ -314,8 +314,8 @@ VALUES
   ( 33, 5   , 5);
 
  CREATE TABLE manufactories_plans (
-    equipment_id int REFERENCES equipments(equipment_id) ON DELETE SET NULL,
     order_id int REFERENCES orders(id) ON DELETE SET NULL,
+    equipment_id int REFERENCES equipments(equipment_id) ON DELETE SET NULL,
     project_id int REFERENCES projects(project_id) ON DELETE SET NULL,
     product_id int REFERENCES products(id) ON DELETE SET NULL,
     product_count int,
@@ -358,10 +358,6 @@ DROP TABLE IF EXISTS units;
     doc_start_date date,
     doc_end_date date
   );
-
-
-
-equipment_id, order_id, project_id, product_id, product_count, time_to_produce
 
  SELECT 
        p.project_name as "projectName"
