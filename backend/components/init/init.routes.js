@@ -3,8 +3,9 @@ const db = require('../../db');
 
 const router = new Router();
 
-router.get('/createdb', () => {
-  db.query(`
+router.get('/createdb', async (req, res) => {
+  try {
+    await db.query(`
   CREATE TABLE units (
     id serial PRIMARY KEY,
     unit_name varchar(255),
@@ -329,8 +330,12 @@ router.get('/createdb', () => {
       time_to_produce int,
       doc_date date
     );
-  
   `);
+    res.json({ value: 'all is ok' });
+  } catch (error) {
+    console.log(error);
+    res.json({ value: error });
+  }
 });
 
 module.exports = router;
