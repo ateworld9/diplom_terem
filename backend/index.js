@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 
 const errorMiddleware = require('./middlewares/error.middleware');
 
+const initRouter = require('./components/init/init.routes');
 const userRouter = require('./components/user/user.routes');
 const categoriesRouter = require('./components/categories/categories.routes');
 const projectsRouter = require('./components/projects/projects.routes');
@@ -15,12 +16,14 @@ const manufactoriesRouter = require('./components/manufactories/manufactories.ro
 
 const app = express();
 app.use(express.json());
+app.use(express.static(path.resolve('../frontend/build')));
 app.use(cookieParser());
 app.use(cors({
   credentials: true,
   origin: process.env.CLIENT_URL,
 }));
 
+app.use('/api', initRouter);
 app.use('/api', userRouter);
 app.use('/api', categoriesRouter);
 app.use('/api', projectsRouter);
@@ -31,6 +34,7 @@ app.use('/api', manufactoriesRouter);
 app.use(errorMiddleware);
 
 app.get('/', (req, res) => {
+  console.log(__dirname);
   res.sendFile(path.resolve('../frontend/build/index.html'));
 });
 const PORT = process.env.PORT || 3001;

@@ -43,10 +43,11 @@ class ManufactoriesPlansService {
           FOR rec_inner IN (SELECT equipment_id, powers FROM equipments) LOOP
           powerr:= 0;
             <<oute>>
-            FOR rec_outer IN (SELECT * FROM orders o 
+            FOR rec_outer IN (
+                      SELECT * FROM orders o 
                       join specifications s on o.project_id = s.project_id
                       join specifications_items si on si.specification_id = s.id
-                        join manufactories_produce_products mpp on mpp.product_id = si.product_id
+                      join manufactories_produce_products mpp on mpp.product_id = si.product_id
                       WHERE o.order_date > to_date( '${fromDate}' , 'YYYY-MM-DD') and mpp.equipment_id = rec_inner.equipment_id) LOOP
               CONTINUE inn WHEN rec_inner.powers < powerr + rec_outer.time_to_produce;
               powerr:= powerr + rec_outer.time_to_produce;
