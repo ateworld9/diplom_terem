@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const API_URL = 'http://localhost:3001/api';
+export const API_URL = 'http://app.ateworld9.ru/api';
 
 const $api = axios.create({
   withCredentials: true,
