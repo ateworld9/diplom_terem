@@ -6,7 +6,7 @@ orderId: number;
 productId: number
 equipmentName: string;
  productName: string
- productCount: string
+ productCount: number
  timeToProduce: number
  unitShort: string
 }

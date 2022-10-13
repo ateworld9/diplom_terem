@@ -16,35 +16,13 @@ interface IPManufactories {
 }
 
 const ManufactoriesPlans: FC<IPManufactories> = ({ manufactories }) => (
-  <TableContainer component={Paper}>
-    <Table aria-label="collapsible table">
-      <TableHead>
-        <TableRow>
-          <TableCell />
-          <TableCell align="left">
-            <Typography sx={{ fontWeight: 'bold' }}>
-              Номер цеха
-            </Typography>
-          </TableCell>
-          <TableCell align="left">
-            <Typography sx={{ fontWeight: 'bold' }}>
-              Мощность цеха
-            </Typography>
-          </TableCell>
-          <TableCell align="left">
-            <Typography sx={{ fontWeight: 'bold' }}>
-              Суммарная необходимая мощность по плану
-            </Typography>
-          </TableCell>
-        </TableRow>
-      </TableHead>
-      <TableBody>
-        {manufactories.map((manufactory) => (
-          <ManufactoryPlan key={`manufactoryPlan${manufactory.manufactoryId}`} {...manufactory} />
-        ))}
-      </TableBody>
-    </Table>
-  </TableContainer>
+  <>
+
+    {manufactories.map((manufactory) => (
+      <ManufactoryPlan key={`manufactoryPlan${manufactory.manufactoryId}`} {...manufactory} />
+    ))}
+
+  </>
 );
 
 export default ManufactoriesPlans;

@@ -1,7 +1,9 @@
 import { FC, useEffect } from 'react';
 import {
-  Container, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography,
+  Button,
+  Container, Modal, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography,
 } from '@mui/material';
+import { Box } from '@mui/system';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { fetchOrders } from './OrdersSlice';
 
@@ -86,7 +88,39 @@ const OrdersIndoc: FC = () => {
           </TableBody>
         </Table>
       </TableContainer>
+      <Modal
+        open={false}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={{
+          position: 'absolute' as const,
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: '80%',
+          bgcolor: 'background.paper',
+          border: '2px solid #000',
+          boxShadow: 24,
+          p: 4,
+        }}
+        >
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Изменение строки документа
+          </Typography>
+          <Box display="flex" my={4}>
 
+            <TextField label="Фио заказчика" sx={{ mr: 1, width: '100%' }} value="Тестов Тест Тестович" />
+            <TextField label="Проект" sx={{ mr: 1, width: '100%' }} value="Лидер 6" />
+            <TextField label="Адрес" sx={{ mr: 1, width: '100%' }} value="Тестовый адрес" />
+            <TextField label="Стоимость" sx={{ mr: 1, width: '100%' }} value="1290600" />
+            <TextField label="Дата" sx={{ mr: 1, width: '100%' }} value="2022-06-17" />
+          </Box>
+          <Button variant="contained" sx={{ ml: '89%' }}>
+            Сохранить
+          </Button>
+        </Box>
+      </Modal>
     </Container>
   );
 };

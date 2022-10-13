@@ -9,7 +9,7 @@ import Logo from './Logo';
 import { useAppDispatch } from '../../hooks/redux';
 import { fetchLogout } from '../../store/reducers/ActionCreators';
 
-const authenticatedPages = [{ page: 'Задача 1', link: '/task1' }, { page: 'Задача 2', link: '/task2' }, { page: 'Задача 3', link: '/task3' }, { page: 'Задача 4', link: '/task4' }];
+const authenticatedPages = [{ page: 'Формирование недельных планов работы цехов', link: '/task1' }, { page: 'Определение потребности в сырье для производства ', link: '/task2' }, { page: 'Контроль выполнения недельных планов работы цехов', link: '/task3' }, { page: 'Определение потребности в новом оборудовании', link: '/task4' }];
 const directoriesPages = [
   { page: 'Справочник цехов', link: '/spravochnik/manufactories' },
   { page: 'Реестр спецификаций проектов', link: '/spravochnik/specifications' },
@@ -82,7 +82,7 @@ const AuthorizedHeader: FC = () => {
             my: 2, mx: 4, display: 'block', color: 'common.black', fontSize: '17px',
           }}
         >
-          Входящие документы
+          Входные документы
         </Button>
         <Menu
           id="indocs-menu"

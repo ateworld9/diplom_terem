@@ -5,9 +5,12 @@ const manufactoriesPlansAdapter = (plans) => {
   const resPlans = [];
   for (let i = 0; i < plans.length; i += 1) {
     const {
-      orderId, manufactoryId, powers, docDate, equipmentName, productId, productName, productCount, timeToProduce, unitShort,
+      manufactoryId, powers, docDate, equipmentName, productId, productName, timeToProduce, unitShort,
     } = plans[i];
+    const productCount = Number(plans[i].productCount);
+
     let tempIndex = -1;
+    let temp2 = -1;
     const manufactory = resPlans.find((el, manufactoryIndex) => {
       tempIndex = manufactoryIndex;
       return el.manufactoryId === plans[i].manufactoryId;
@@ -17,12 +20,17 @@ const manufactoriesPlansAdapter = (plans) => {
         manufactoryId,
         docDate,
         manufactoryPlan: [{
-          orderId, equipmentName, powers, productId, productName, productCount, timeToProduce, unitShort,
+          equipmentName, powers, productId, productName, productCount, timeToProduce, unitShort,
         }],
       });
+    } else if (resPlans[tempIndex]?.manufactoryPlan.find((el, id) => {
+      temp2 = id;
+      return el.productName === productName;
+    })) {
+      resPlans[tempIndex].manufactoryPlan[temp2].productCount += productCount;
     } else {
       resPlans[tempIndex]?.manufactoryPlan.push({
-        orderId, equipmentName, powers, productId, productName, productCount, timeToProduce, unitShort,
+        equipmentName, powers, productId, productName, productCount, timeToProduce, unitShort,
       });
     }
   }

@@ -129,14 +129,12 @@ CREATE TABLE manufactories (
   manufactory_name varchar(255)    -- Наименование цеха
 );
 
-
 INSERT INTO manufactories
 (manufactory_name)
 VALUES
 ('Цех №1'),
 ('Цех №2'),
 ('Цех №3');
-
 
 CREATE TABLE manufactories2equipments(
   id serial PRIMARY KEY, 
@@ -340,7 +338,7 @@ DROP TABLE IF EXISTS tokens;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS units;
 */
-  CREATE TABLE manufactories_work_reports (
+CREATE TABLE manufactories_work_reports (
     manufactory_id int REFERENCES manufactories(id) ON DELETE SET NULL,
     product_id nt REFERENCES products(id) ON DELETE SET NULL,
     fact_count int,
@@ -349,7 +347,7 @@ DROP TABLE IF EXISTS units;
     doc_date date
   );
 
-  CREATE TABLE manufactories_plan_fact (
+CREATE TABLE manufactories_plan_fact (
     manufactory_id int REFERENCES manufactories(id) ON DELETE SET NULL,
     product_id int REFERENCES products(id) ON DELETE SET NULL,
     plan_count int,
@@ -357,9 +355,9 @@ DROP TABLE IF EXISTS units;
     undone_count int,
     doc_start_date date,
     doc_end_date date
-  );
+);
 
- SELECT 
+SELECT 
        p.project_name as "projectName"
       ,si.product_id as "productId"
       ,pp.product_name as "productName"

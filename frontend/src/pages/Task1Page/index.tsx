@@ -15,7 +15,7 @@ import { fetchManufactoriesPlans } from './ManufactoriesPlansSlice';
 
 const Task1Page: FC = () => {
   const dispatch = useAppDispatch();
-  const [date, setDate] = useState('2022-06-01');
+  const [date, setDate] = useState('2022-06-01'); // 2022-06-01
   const [bool, setBool] = useState(false);
   const [planBool, setPlanBool] = useState(false);
   const { manufactories } = useAppSelector((state) => state.manufactoriesSpravochnikSlice);

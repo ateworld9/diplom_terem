@@ -28,12 +28,9 @@ CREATE TABLE equipments(
   powers int,                         -- Мощность
   power_drop_year_percent int,        -- Нормативное падение мощности в год, %
   count_of_repairs  int,              -- Кол-во разрешенных ремонтов	
-  write_off_details varchar(255),     -- Возм.демонтажа деталей при списании оборудования
   service_life int,                   -- Эксплуатационный срок 
   guarantee_period int,               -- Гарантийный срок работы оборудования	
-  reserve_details varchar(255),       -- Запасные детали	
   start_date date,                    -- Дата покупки
-  capital_repair_date date            -- Период проведения капитальных ремонтов	
 );
 
 CREATE TABLE manufactories (
@@ -43,19 +40,11 @@ CREATE TABLE manufactories (
 );
 
 
-CREATE TABLE raws(
-  id serial PRIMARY KEY,
-  rawName varchar(255),
-  rawCost int,
-  unitId int REFERENCES units(id) ON DELETE SET NULL
-  -- volumeInWarehouse int
-);
-
 CREATE TABLE products(
   id serial PRIMARY KEY,
   product_name varchar(255),
   unit_id int REFERENCES units(id) ON DELETE SET NULL,
-  raw_id int REFERENCES raws(id) ON DELETE SET NULL,
+  raw_id int ,
   raw_consumption int
 );
 
@@ -81,6 +70,16 @@ CREATE TABLE specifications_items(
    time_to_produce int, 
    equipment_id int REFERENCES equipments(equipment_id) ON DELETE SET NULL
  );
+
+CREATE TABLE manufactories_plans (
+    manufactory_id int REFERENCES manufactories(id) ON DELETE SET NULL,
+    order_id int REFERENCES orders(id) ON DELETE SET NULL,
+    project_id int REFERENCES projects(project_id) ON DELETE SET NULL,
+    product_id int REFERENCES products(id) ON DELETE SET NULL,
+    product_count int,
+    time_to_produce int
+
+  );
 
 CREATE TABLE technologic_map (
   equipment_id int REFERENCES equipments(equipment_id) ON DELETE SET NULL
@@ -121,15 +120,7 @@ CREATE TABLE reestr_completed_products (
 );
 
 
- CREATE TABLE manufactories_plans (
-    manufactory_id int REFERENCES manufactories(id) ON DELETE SET NULL,
-    order_id int REFERENCES orders(id) ON DELETE SET NULL,
-    project_id int REFERENCES projects(project_id) ON DELETE SET NULL,
-    product_id int REFERENCES products(id) ON DELETE SET NULL,
-    product_count int,
-    time_to_produce int
 
-  );
 
   CREATE TABLE manufactories_work_reports (
     manufactory_id int REFERENCES manufactories(id) ON DELETE SET NULL,
